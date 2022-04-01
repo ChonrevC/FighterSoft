@@ -65,7 +65,7 @@ public class SignUp extends AppCompatActivity {
                             data[1] = password;
 
                             // put the data in the database via the signup.php link location (replaced local host with IP address)
-                            PutData putData = new PutData("http://192.168.1.103/LoginRegister/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.1.103/FighterSoft/signup.php", "POST", field, data);
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
