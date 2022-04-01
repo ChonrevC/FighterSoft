@@ -6,4 +6,5 @@
     <string name="password">password</string>
     <string name="login">Login</string>
     <string name="signupText">New here? <u>Create a new account</u></string>
+    <string name="email">email</string>
 </resources>

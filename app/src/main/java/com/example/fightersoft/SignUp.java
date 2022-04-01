@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -18,7 +17,7 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class SignUp extends AppCompatActivity {
 
-    TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
+    TextInputEditText textInputEditTextUsername, textInputEditTextPassword, textInputEditTextEmail;
     Button buttonSignUp;
     TextView textViewLogin;
     ProgressBar progressBar;
@@ -31,6 +30,7 @@ public class SignUp extends AppCompatActivity {
         // Initialize all components on activity
         this.textInputEditTextUsername = findViewById(R.id.username);
         this.textInputEditTextPassword = findViewById(R.id.password);
+        this.textInputEditTextEmail = findViewById(R.id.email);
         this.buttonSignUp = findViewById(R.id.signupButton);
         this.textViewLogin = findViewById(R.id.loginText);
         this.progressBar = findViewById(R.id.progress);
@@ -41,12 +41,14 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
 
                 // get the values of the components in terms of Strings
-                String username, password;
+                String username, password, fullname, email;
                 username = textInputEditTextUsername.getText().toString();
                 password = textInputEditTextPassword.getText().toString();
+                email = textInputEditTextEmail.getText().toString();
+                fullname = username;
 
                 // if all fields were inputted in properly, put in the info into the database
-                if(!username.equals("") && !password.equals(""))
+                if(!fullname.equals("") && !username.equals("") && !password.equals("") && !email.equals(""))
                 {
 
                     progressBar.setVisibility(View.VISIBLE);                        // show loading
@@ -56,13 +58,17 @@ public class SignUp extends AppCompatActivity {
                         public void run() {
                             //Starting Write and Read data with URL
                             //Creating array for parameters
-                            String[] field = new String[2];
-                            field[0] = "username";
-                            field[1] = "password";
+                            String[] field = new String[4];
+                            field[0] = "fullname";
+                            field[1] = "username";
+                            field[2] = "password";
+                            field[3] = "email";
                             //Creating array for data
-                            String[] data = new String[2];
-                            data[0] = username;
-                            data[1] = password;
+                            String[] data = new String[4];
+                            data[0] = fullname;
+                            data[1] = username;
+                            data[2] = password;
+                            data[3] = email;
 
                             // put the data in the database via the signup.php link location (replaced local host with IP address)
                             PutData putData = new PutData("http://192.168.1.103/FighterSoft/signup.php", "POST", field, data);
