@@ -67,6 +67,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="159dp"
         android:text="@string/sign_up"
+        android:backgroundTint="#ff7200"
         app:layout_constraintBottom_toTopOf="@+id/loginText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
