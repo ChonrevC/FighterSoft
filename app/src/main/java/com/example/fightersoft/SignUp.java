@@ -1,4 +1,4 @@
-package com.example.loginregister;
+package com.example.fightersoft;
 
 import androidx.appcompat.app.AppCompatActivity;
 
