@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fightersoft.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
@@ -41,7 +42,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
 
                 // get the values of the components in terms of Strings
-                String fullname, username, password, email;
+                String username, password;
                 username = textInputEditTextUsername.getText().toString();
                 password = textInputEditTextPassword.getText().toString();
 
