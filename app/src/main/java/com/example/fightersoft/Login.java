@@ -82,6 +82,8 @@ public class Login extends AppCompatActivity {
                                         // if successful, open up the login activity
                                         Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("USERNAME", username);          // pass the username of the person who logged in
+                                        intent.putExtra("PASSWORD", password);          // pass the password of the person who logged in
                                         startActivity(intent);
                                         finish();
                                     }
