@@ -4,4 +4,6 @@
     <string name="sign_up">sign up</string>
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="signupText">New here? <u>Create a new account</u></string>
 </resources>
