@@ -125,7 +125,7 @@ public class SignUp extends AppCompatActivity {
                                         }
 
                                     }
-                                })
+                                });
                             } else
                             {
                                 Toast.makeText(getApplicationContext(), "Failed to Register. Try again.", Toast.LENGTH_LONG).show();
