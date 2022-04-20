@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,22 +16,26 @@ import android.widget.Toast;
 import com.example.fightersoft.MainActivity;
 import com.example.fightersoft.SignUp;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class Login extends AppCompatActivity {
 
-    TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
+    EditText editTextEmail, editTextPassword;
     Button buttonLogin;
     TextView textViewSignUp;
     ProgressBar progressBar;
+
+    // create a variable to allow for DB usage
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.textInputEditTextUsername = findViewById(R.id.username);
-        this.textInputEditTextPassword = findViewById(R.id.password);
+        this.editTextEmail = findViewById(R.id.email);
+        this.editTextPassword = findViewById(R.id.password);
         this.buttonLogin = findViewById(R.id.loginButton);
         this.textViewSignUp = findViewById(R.id.signupText);
         this.progressBar = findViewById(R.id.progress);
@@ -44,14 +49,31 @@ public class Login extends AppCompatActivity {
 
                 // get the values of the components in terms of Strings
                 String username, password;
-                username = textInputEditTextUsername.getText().toString();
-                password = textInputEditTextPassword.getText().toString();
+                username = editTextUsername.getText().toString().trim();
+                password = editTextPassword.getText().toString().trim();
+
+                // if user left the username space empty
+                if(email.isEmpty())
+                {
+                    editTextUsername.setError("Username is required");
+                    editTextUsername.requestFocus();
+                    return;
+                }
+
+                // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
+                if(password.isEmpty())
+                {
+                    editTextPassword.setError("Password is required");
+                    editTextPassword.requestFocus();
+                    return;
+                }
 
                 // if all fields were inputted in properly, put in the info into the database
-                if(!username.equals("") && !password.equals(""))
-                {
+                progressBar.setVisibility(View.VISIBLE);                        // show loading
 
-                    progressBar.setVisibility(View.VISIBLE);                        // show loading
+                mAuth.signInWith
+
+                    /*
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override
@@ -97,14 +119,7 @@ public class Login extends AppCompatActivity {
                             //End Write and Read data with URL
                         }
                     });
-
-                }
-
-                // if the fields are not inputted in properly, throw up a toast error
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "All fields are required", Toast.LENGTH_SHORT).show();
-                }
+                     */
 
             }
 

@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 public class SignUp extends AppCompatActivity {
 
     // create variables for components in the sign up activity
-    TextInputEditText textInputEditTextUsername, textInputEditTextPassword, textInputEditTextEmail;
+    EditText editTextEmail, editTextUsername, editTextPassword;
     Button buttonSignUp;
     TextView textViewLogin;
     ProgressBar progressBar;
@@ -39,9 +40,9 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // Initialize all components on activity
-        this.textInputEditTextUsername = findViewById(R.id.username);
-        this.textInputEditTextPassword = findViewById(R.id.password);
-        this.textInputEditTextEmail = findViewById(R.id.email);
+        this.editTextUsername = (EditText)findViewById(R.id.username);
+        this.editTextPassword = (EditText)findViewById(R.id.password);
+        this.editTextEmail = (EditText)findViewById(R.id.email);
         this.buttonSignUp = findViewById(R.id.signupButton);
         this.textViewLogin = findViewById(R.id.loginText);
         this.progressBar = findViewById(R.id.progress);
@@ -56,38 +57,48 @@ public class SignUp extends AppCompatActivity {
 
                 // get the values of the components in terms of Strings
                 String username, password, email;
-                username = textInputEditTextUsername.getText().toString();
-                password = textInputEditTextPassword.getText().toString();
-                email = textInputEditTextEmail.getText().toString();
+                username = editTextUsername.getText().toString().trim();
+                password = editTextPassword.getText().toString().trim();
+                email = editTextEmail.getText().toString().trim();
 
                 // if user left the username space empty
                 if(username.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(), "Username is required", Toast.LENGTH_SHORT).show();
+                    editTextUsername.setError("Username is required");
+                    editTextUsername.requestFocus();
+                    return;
                 }
 
                 // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
-                else if(password.isEmpty())
+                if(password.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(), "Password is required", Toast.LENGTH_SHORT).show();
+                    editTextPassword.setError("Password is required");
+                    editTextPassword.requestFocus();
+                    return;
                 }
 
                 // if user left email space empty
-                else if(email.isEmpty())
+                if(email.isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(), "Email is required", Toast.LENGTH_SHORT).show();
+                    editTextEmail.setError("Email is required");
+                    editTextEmail.requestFocus();
+                    return;
                 }
 
                 // if user's email isn't compatible with app
-                else if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                if(!(Patterns.EMAIL_ADDRESS.matcher(email).matches()))
                 {
-                    Toast.makeText(getApplicationContext(), "Please provide a valid email", Toast.LENGTH_SHORT).show();
+                    editTextEmail.setError("Please provide a valid email");
+                    editTextEmail.requestFocus();
+                    return;
                 }
 
                 // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
-                else if(password.length() < 6)
+                if(password.length() < 6)
                 {
-                    Toast.makeText(getApplicationContext(), "Password must be longer than 6 characters", Toast.LENGTH_SHORT).show();
+                    editTextPassword.setError("Password must be at least 6 characters long");
+                    editTextPassword.requestFocus();
+                    return;
                 }
 
                 // if all fields were inputted in properly, put in the info into the database
@@ -117,18 +128,25 @@ public class SignUp extends AppCompatActivity {
                                         if(task.isSuccessful())
                                         {
                                             Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
-
                                             progressBar.setVisibility(View.GONE);
-                                        } else
+
+                                            Intent intent = new Intent(getApplicationCo ,mntext(), Login.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else
                                         {
                                             Toast.makeText(getApplicationContext(), "Failed to Register. Try again.", Toast.LENGTH_LONG).show();
+                                            progressBar.setVisibility(View.GONE);
                                         }
 
                                     }
                                 });
-                            } else
+                            }
+                            else
                             {
                                 Toast.makeText(getApplicationContext(), "Failed to Register. Try again.", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
                             }
 
                         }
