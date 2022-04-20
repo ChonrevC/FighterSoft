@@ -1,11 +1,13 @@
 package com.example.fightersoft;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +17,10 @@ import android.widget.Toast;
 
 import com.example.fightersoft.MainActivity;
 import com.example.fightersoft.SignUp;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
@@ -40,7 +45,7 @@ public class Login extends AppCompatActivity {
         this.textViewSignUp = findViewById(R.id.signupText);
         this.progressBar = findViewById(R.id.progress);
 
-
+        mAuth = FirebaseAuth.getInstance();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -48,15 +53,15 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
 
                 // get the values of the components in terms of Strings
-                String username, password;
-                username = editTextUsername.getText().toString().trim();
+                String email, password;
+                email = editTextEmail.getText().toString().trim();
                 password = editTextPassword.getText().toString().trim();
 
                 // if user left the username space empty
                 if(email.isEmpty())
                 {
-                    editTextUsername.setError("Username is required");
-                    editTextUsername.requestFocus();
+                    editTextEmail.setError("Username is required");
+                    editTextEmail.requestFocus();
                     return;
                 }
 
@@ -71,55 +76,25 @@ public class Login extends AppCompatActivity {
                 // if all fields were inputted in properly, put in the info into the database
                 progressBar.setVisibility(View.VISIBLE);                        // show loading
 
-                mAuth.signInWith
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    /*
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Starting Write and Read data with URL
-                            //Creating array for parameters
-                            String[] field = new String[2];
-                            field[0] = "username";
-                            field[1] = "password";
-                            //Creating array for data
-                            String[] data = new String[2];
-                            data[0] = username;
-                            data[1] = password;
+                        if(task.isSuccessful())
+                        {
+                            progressBar.setVisibility(View.GONE);
 
-                            // put the data in the database via the signup.php link location (replace local host with IP address)
-                            PutData putData = new PutData("http://192.168.1.103/LoginRegister/login.php", "POST", field, data);
-
-                            if (putData.startPut()) {
-                                if (putData.onComplete()) {
-
-                                    // when completed, take away the progress bar and store the result in a string to check success
-                                    progressBar.setVisibility(View.GONE);
-                                    String result = putData.getResult();
-
-                                    // Sign Up Success comes from the signup.php link, if the data transfer was successful
-                                    if(result.equals("Login Success"))
-                                    {
-                                        // if successful, open up the login activity
-                                        Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.putExtra("USERNAME", username);          // pass the username of the person who logged in
-                                        intent.putExtra("PASSWORD", password);          // pass the password of the person who logged in
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-                            //End Write and Read data with URL
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
                         }
-                    });
-                     */
+                        else
+                        {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
 
             }
 

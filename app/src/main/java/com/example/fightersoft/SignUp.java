@@ -130,7 +130,7 @@ public class SignUp extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "User registered successfully", Toast.LENGTH_LONG).show();
                                             progressBar.setVisibility(View.GONE);
 
-                                            Intent intent = new Intent(getApplicationCo ,mntext(), Login.class);
+                                            Intent intent = new Intent(getApplicationContext(), Login.class);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -151,56 +151,6 @@ public class SignUp extends AppCompatActivity {
 
                         }
                     });
-
-                    /*
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Starting Write and Read data with URL
-                            //Creating array for parameters
-                            String[] field = new String[4];
-                            field[0] = "fullname";
-                            field[1] = "username";
-                            field[2] = "password";
-                            field[3] = "email";
-                            //Creating array for data
-                            String[] data = new String[4];
-                            data[0] = fullname;
-                            data[1] = username;
-                            data[2] = password;
-                            data[3] = email;
-
-                            // put the data in the database via the signup.php link location (replaced local host with IP address)
-                            PutData putData = new PutData("http://192.168.1.103/LoginRegister/signup.php", "POST", field, data);
-
-                            if (putData.startPut()) {
-                                if (putData.onComplete()) {
-
-                                    // when completed, take away the progress bar and store the result in a string to check success
-                                    progressBar.setVisibility(View.GONE);
-                                    String result = putData.getResult();
-
-                                    // Sign Up Success comes from the signup.php link, if the data transfer was successful
-                                    if(result.equals("Sign Up Success"))
-                                    {
-                                        // if successful, open up the login activity
-                                        Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), Login.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-                            //End Write and Read data with URL
-                        }
-                    });
-                     */
 
                 }
 

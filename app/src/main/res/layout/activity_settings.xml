@@ -23,13 +23,13 @@
         android:textAllCaps="true"
         android:textColor="#ff7200"
         android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/username"
+    <EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="30dp"
@@ -37,27 +37,26 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="0dp"
         android:drawableEnd="@drawable/ic_user"
-        android:hint="@string/username"
-        app:layout_constraintBottom_toTopOf="@+id/password"
+        android:hint="@string/email"
+        app:layout_constraintBottom_toTopOf="@+id/updateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Settings" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:drawableEnd="@drawable/ic_password"
+        android:hint="@string/password"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="0dp"
-        android:drawableEnd="@drawable/ic_password"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/updateButton"
+        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/colorButton" />
 
     <Button
         android:id="@+id/updateButton"
@@ -67,12 +66,12 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="114dp"
         android:backgroundTint="#2286ff"
-        android:text="@string/update"
+        android:text="Change Password"
         app:layout_constraintBottom_toTopOf="@+id/colorButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/colorButton"
@@ -83,7 +82,7 @@
         android:layout_marginEnd="96dp"
         android:layout_marginBottom="0dp"
         android:text="@string/colorSwitch"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateButton" />
@@ -93,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="122dp"
         android:layout_marginBottom="222dp"
         android:backgroundTint="#000000"
@@ -101,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorButton" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
