@@ -52,49 +52,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // get the values of the components in terms of Strings
-                String email, password;
-                email = editTextEmail.getText().toString().trim();
-                password = editTextPassword.getText().toString().trim();
-
-                // if user left the username space empty
-                if(email.isEmpty())
-                {
-                    editTextEmail.setError("Username is required");
-                    editTextEmail.requestFocus();
-                    return;
-                }
-
-                // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
-                if(password.isEmpty())
-                {
-                    editTextPassword.setError("Password is required");
-                    editTextPassword.requestFocus();
-                    return;
-                }
-
-                // if all fields were inputted in properly, put in the info into the database
-                progressBar.setVisibility(View.VISIBLE);                        // show loading
-
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful())
-                        {
-                            progressBar.setVisibility(View.GONE);
-
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
+                loginUser();
 
             }
 
@@ -103,11 +61,67 @@ public class Login extends AppCompatActivity {
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignUp.class);
-                startActivity(intent);
-                finish();
+
+                moveToSignup();
+
             }
         });
 
+    }
+
+    // function for logging in a user
+    private void loginUser() {
+
+        // get the values of the components in terms of Strings
+        String email, password;
+        email = editTextEmail.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
+
+        // if user left the username space empty
+        if(email.isEmpty())
+        {
+            editTextEmail.setError("Username is required");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
+        if(password.isEmpty())
+        {
+            editTextPassword.setError("Password is required");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        // if all fields were inputted in properly, put in the info into the database
+        progressBar.setVisibility(View.VISIBLE);                        // show loading
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful())
+                {
+                    progressBar.setVisibility(View.GONE);
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+    }
+
+    // function for moving to the signup activity
+    private void moveToSignup() {
+        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        startActivity(intent);
+        finish();
     }
 }

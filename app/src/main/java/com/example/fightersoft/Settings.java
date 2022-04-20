@@ -46,55 +46,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String email, password;
-                email = editTextEmail.getText().toString().trim();
-                password = editTextPassword.getText().toString().trim();
-
-                if(email.isEmpty())
-                {
-                    editTextEmail.setError("Enter email to delete account");
-                    editTextEmail.requestFocus();
-                    return;
-                }
-
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                if(email != user.getEmail())
-                {
-                    editTextEmail.setError("Incorrect email");
-                }
-
-                else
-                {
-                    AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-
-                    if(user != null)
-                    {
-                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        if(task.isSuccessful())
-                                        {
-                                            Intent intent = new Intent(getApplicationContext(), Login.class);
-                                            Toast.makeText(getApplicationContext(), "Deleted User Successfully", Toast.LENGTH_LONG).show();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
-                                        }
-
-                                    }
-                                });
-
-                            }
-                        });
-                    }
-                }
+                deleteUser();
 
             }
         });
@@ -104,32 +56,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // get the values of the components in terms of Strings
-                String email;
-                email = editTextEmail.getText().toString().trim();
-
-                if(email.isEmpty())
-                {
-                    editTextEmail.setError("Email required to change password");
-                    editTextEmail.requestFocus();
-                    return;
-                }
-
-                mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(getApplicationContext(), "Check email to reset password", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "Incorrect email", Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
+                resetPassword();
 
             }
         });
@@ -152,4 +79,101 @@ public class Settings extends AppCompatActivity {
         });
 
     }
+
+    // Function for deleting a user
+    private void deleteUser() {
+
+        String email, password;
+        email = editTextEmail.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
+
+        if(email.isEmpty())
+        {
+            editTextEmail.setError("Enter email to delete account");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(email != user.getEmail())
+        {
+            editTextEmail.setError("Incorrect email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if(password.isEmpty())
+        {
+            editTextPassword.setError("Enter correct password");
+            editTextPassword.requestFocus();
+            return;
+        }
+
+        else
+        {
+            AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+
+            if(user != null)
+            {
+                user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if(task.isSuccessful())
+                                {
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                    Toast.makeText(getApplicationContext(), "Deleted User Successfully", Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        }
+
+    }
+
+    // Function for resetting a user's password
+    private void resetPassword() {
+
+        // get the values of the components in terms of Strings
+        String email;
+        email = editTextEmail.getText().toString().trim();
+
+        if(email.isEmpty())
+        {
+            editTextEmail.setError("Email required to change password");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(getApplicationContext(), "Check email to reset password", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Incorrect email", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+    }
+
 }
