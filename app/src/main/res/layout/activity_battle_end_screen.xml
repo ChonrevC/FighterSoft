@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BattleEndScreen">
+
+    <ImageView
+        android:id="@+id/fsbg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/winscreen" />
+
+    <TextView
+        android:id="@+id/windDeclaration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="40dp"
+        android:visibility="visible"
+        tools:text="Wins!"
+        android:layout_centerHorizontal="true"
+        android:translationY="50dp"/>
+
+
+    <ImageView
+        android:id="@+id/player1WinPortrait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleX="6"
+        android:scaleY="6"
+        android:src="@drawable/hportrait"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/player2WinPortrait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleX="6"
+        android:scaleY="6"
+        android:src="@drawable/waloopoe"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/squareCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleX="15"
+        android:scaleY="15"
+        android:src="@drawable/square"
+        android:translationY="440dp"/>
+
+
+    <TextView
+        android:id="@+id/scoreinc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:translationY="500dp"
+        android:visibility="visible"
+        tools:text="+1 to Winner's Record" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/MM"
+        android:background="@color/white"
+        android:text="Main Menu?"
+        android:textColor="@color/black"
+        android:translationX="25dp"
+        android:translationY="540dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Again"
+        android:id="@+id/PA"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:translationX="265dp"
+        android:translationY="540dp" />
+
+</RelativeLayout>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/fsbg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fsbg" />
+
+    <ImageView
+        android:id="@+id/three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/three"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/two"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+        android:id="@+id/one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/one"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="30"
+        android:textSize="50dp"
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
+
+
+
+    <ImageView
+        android:id="@+id/hbackbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hoopblacklife"
+        android:scaleX="0.4"
+        android:scaleY="0.3"
+        android:translationY="-15dp"
+        android:translationX="-200dp"/>
+
+    <ImageView
+        android:id="@+id/walopBlackBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/waloopblacklife"
+        android:scaleX="0.4"
+        android:scaleY="0.3"
+        android:translationY="-15dp"
+        android:translationX="195dp"/>
+    <ImageView
+        android:id="@+id/waloppurpBard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/waloopoegreenlife"
+        android:scaleX="0.4"
+        android:scaleY="0.3"
+        android:translationY="-15dp"
+        android:translationX="195dp"/>
+    <ImageView
+        android:id="@+id/hbrownbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hoopgreenlife"
+        android:scaleX="0.4"
+        android:scaleY="0.3"
+        android:translationY="-15dp"
+        android:translationX="-200dp"/>
+
+
+    <ImageView
+        android:id="@+id/tussle"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/tussle"
+        android:visibility="invisible" />
+    <TextView
+        android:id="@+id/player1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Hoopoe - Player 1"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:translationY="40dp"
+        android:translationX="-235dp"/>
+
+    <TextView
+        android:id="@+id/player2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Waloope - Player 2"
+        android:textSize="15dp"
+        android:textColor="#000"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:translationY="40dp"
+        android:translationX="220dp"/>
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/wlpidle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/waloopoeidle"
+        android:translationX="508dp"
+        android:translationY="200dp"
+        android:visibility="gone" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/wblidl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wbl"
+        android:translationX="508dp"
+        android:translationY="200dp"
+        android:visibility="gone" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/hoopidl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hooopooeidll"
+        android:translationX="38dp"
+        android:translationY="200dp"
+        android:visibility="gone"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/redidle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/redidll"
+        android:translationX="38dp"
+        android:translationY="200dp"
+        android:visibility="gone"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/waloopatk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/waloopoeca"
+        android:translationX="415dp"
+        android:translationY="147dp"
+        android:visibility="gone"
+        app:loopCount="1"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/wbca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wbca"
+        android:translationX="415dp"
+        android:translationY="147dp"
+        android:visibility="gone"
+        app:loopCount="1"/>
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/hoopatk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hoopoeca"
+        android:translationX="56dp"
+        android:translationY="147dp"
+        android:visibility="gone"
+        app:loopCount="1" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/hrca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hrca"
+        android:translationX="56dp"
+        android:translationY="147dp"
+        android:visibility="gone"
+        app:loopCount="1" />
+
+
+</RelativeLayout>
