@@ -2,20 +2,12 @@ package com.example.fightersoft;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.IOException;
 import android.widget.TextView;
-import java.io.*;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     private Button buttonSet;
@@ -23,40 +15,52 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonRegister;
     private Button buttonGame;
     private Button exitButton;
+    private TextView playerNum;
 
-    private MediaPlayer mediaPlayer;
+    public static String p1userN="";
+    public static String p1password="";
+    public static int p1wins = 0;
+    public static int p1Games = 0;
+    public static int p1Skin = 0;
+    public static String p2userN="";
+    public static String p2password="";
+    public static int p2wins = 0;
+    public static int p2Games = 0;
+    public static int p2Skin = 0;
+    public static String send;
 
-    private String p1userN;
-    private int p1wins;
-    private int p1Games;
-    private String p2userN;
-    private int p2wins;
-    private int p2Games;
+    public static void resetP1G(){p1wins=0;p1Games=0;}
+    public static void resetP2G(){p2wins=0;p2Games=0;}
+    public static void increaseGames(){p2Games+=1;p1Games+=1;}
+    public static void increaseP1Wins() {p1wins+=1;}
+    public static void increaseP2Wins(){p2wins+=1;}
+    public static int getP1wins(){return p1wins;}
+    public static int getP2Wins(){return p2wins;}
+    public static int getP1Games(){return p1Games;}
+    public static int getP2Games(){return p2Games;}
+    public static void setP1Skin(int i){p1Skin=i;}
+    public static void setP2Skin(int i){p2Skin=i;}
+    public static int getP1Skin(){return p1Skin;}
+    public static int getP2Skin(){return p2Skin;}
+    public static void setPlayer1(String p1u, String p1p){p1userN=p1u;p1password=p1p;p1wins=0;p1Games=0;}
+    public static void setPlayer2(String p2u, String p2p){p2userN=p2u;p2password=p2p;p2wins=0;p2Games=0;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mediaPlayer = MediaPlayer.create(this, R.raw.qfts);
-        Thread t = new Thread(){
-            public void run(){
-                playBMG();
-            }
-        };
-        t.start();
 
-        exitButton= (Button) findViewById(R.id.exitB);
+        playerNum = findViewById(R.id.noeEnoughPlayers);
+        exitButton= findViewById(R.id.exitB);
         exitButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                stopBGM();
+                finish();
                 System.exit(0);
             }
         });
-        buttonSet = (Button) findViewById(R.id.settingsB);
-        buttonSet.setOnClickListener(new View.OnClickListener()
-        {
+        buttonSet = findViewById(R.id.settingsB);
+        buttonSet.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
             {
@@ -64,41 +68,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonLog = (Button) findViewById(R.id.loginP1);
-        buttonLog.setOnClickListener(new View.OnClickListener()
-        {
+        buttonLog = findViewById(R.id.loginP1);
+        buttonLog.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View n)
-            {
-                openLog();
+            public void onClick(View n){
+                openLog1();
 
             }
         });
 
-        buttonLog = (Button) findViewById(R.id.loginP2);
-        buttonLog.setOnClickListener(new View.OnClickListener()
-        {
+        buttonLog = findViewById(R.id.loginP2);
+        buttonLog.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View n)
-            {
-                openLog();
-
+            public void onClick(View n){
+                openLog2();
             }
         });
 
-        buttonRegister = (Button) findViewById(R.id.signUp);
-        buttonRegister.setOnClickListener(new View.OnClickListener()
-        {
+        buttonRegister = findViewById(R.id.signUp);
+        buttonRegister.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View r)
-            {
+            public void onClick(View r){
                 openRegister();
-
             }
         });
-        buttonGame = (Button) findViewById(R.id.startButton);
+        buttonGame = findViewById(R.id.startButton);
         buttonGame.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View view) {
                 openGame();
@@ -109,8 +104,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
-    public void openLog(){
+    public void openLog1(){
         Intent intention = new Intent(this, Login.class);
+        intention.putExtra(send, "one");
+        startActivity(intention);
+    }
+    public void openLog2(){
+        Intent intention = new Intent(this, Login.class);
+        intention.putExtra(send, "two");
         startActivity(intention);
     }
     public void openRegister(){
@@ -119,16 +120,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openGame(){
-        mediaPlayer.stop();
-        Intent moveToFight = new Intent(this, BattleScreen.class);
-        finish();
-        startActivity(moveToFight);
-        Log.d("game", "Gamer Time");
+        if(p1userN.length() != 0 && p2userN.length() != 0 ) {
+            Intent moveToFight = new Intent(this, BattleScreen.class);
+            moveToFight.putExtra(p1userN, p1userN);
+            moveToFight.putExtra(p2userN, p2userN);
+            finish();
+            startActivity(moveToFight);
+        }else if(p1userN.length()==0 || p2userN.length()==0){
+            playerNum.setVisibility(View.VISIBLE);
+            new CountDownTimer(1000, 1000){
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    playerNum.setVisibility(View.GONE);
+                }
+            }.start();
+        }
     }
-    public void playBMG(){
-        mediaPlayer.start();
-    }
-    public void stopBGM(){mediaPlayer.stop();mediaPlayer.release();}
 }
 
 

@@ -14,6 +14,7 @@
         android:layout_centerHorizontal="true"
         android:text="Main Menu" />
 
+
     <Button
         android:id="@+id/settingsB"
         android:layout_width="90dp"
@@ -86,5 +87,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-35dp"
         app:srcCompat="@drawable/title" />
+
+    <TextView
+        android:id="@+id/noeEnoughPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="You Need Two Players"
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:translationY="200dp"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

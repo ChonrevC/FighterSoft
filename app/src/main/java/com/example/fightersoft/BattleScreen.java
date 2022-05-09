@@ -2,32 +2,17 @@ package com.example.fightersoft;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.Editable;
-import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-
-import pl.droidsonroids.gif.AnimationListener;
-import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 
@@ -54,8 +39,8 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
     private TextView player1View;
     private TextView player2View;
 
-    private String p1Name;
-    private String p2Name;
+    private static String p1Name;
+    private static String p2Name;
 
     private int attackHeight;
 
@@ -69,12 +54,18 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
 
     private int hoHealth=100;
     private int waHealth=100;
-    private double skinP1 = 1;
-    private double skinP2 = 0;
+    private static int skinP1;
+    private static int skinP2;
 
-    private MediaPlayer mediaPlayer;
-
-    public static final String Player = "player";
+    public static final String Player = "";
+    public static String getP1(){
+        return p1Name;
+    }
+    public static String getP2(){
+        return p2Name;
+    }
+    public static int getP1S(){ return skinP1;}
+    public static int getP2S(){ return skinP2;}
 
     public void reducehealth(int player, int damage){
         if(player ==0){
@@ -102,8 +93,6 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
             intent.putExtra(Player, "neither player");
             startActivity(intent);
             stopTimer();
-            stopBGM();
-            finish();
         }else if (waHealth>0 && hoHealth<=0){
             isPlaying = false;
             hMovable=false;
@@ -116,8 +105,6 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
             intent.putExtra(Player, "player2");
             startActivity(intent);
             stopTimer();
-            stopBGM();
-            finish();
         }else if (waHealth<=0 && hoHealth>0){
             isPlaying = false;
             hMovable=false;
@@ -130,8 +117,6 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
             intent.putExtra(Player, "player1");
             startActivity(intent);
             stopTimer();
-            stopBGM();
-            finish();
         }
     }
 
@@ -295,16 +280,13 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
                             }
                         }.start();
                         new CountDownTimer(900, 900) {
-                            public void onTick(long millisUntilFinished) {
-                            }
-
+                            public void onTick(long millisUntilFinished) {}
                             public void onFinish() {
                                 waloopoeAttackView.setVisibility(View.GONE);
                                 waloopoeIdleView.setVisibility(View.VISIBLE);
                                 new CountDownTimer(200, 200) {
                                     public void onTick(long millisUntilDone) {
                                     }
-
                                     @Override
                                     public void onFinish() {
                                         wMovable = true;
@@ -324,36 +306,33 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
         }
     }
 
-    public void playBGM(){
-        mediaPlayer.start();
-    }
-    public void stopBGM(){
-        mediaPlayer.stop();
-    }
-    Thread t = new Thread(){
-        public void run(){
-            playBGM();
-        }
-    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mediaPlayer = MediaPlayer.create(this, R.raw.gtts);
-        t.start();
         timeleftMS =90000;
         hoHealth=100;
         waHealth=100;
         setContentView(R.layout.activity_battle_screen);
         countdownText = findViewById(R.id.clock);
-
-        p1Name="Player 1";
-        p2Name="Player 2";
-
+        Intent intent = getIntent();
+        if(intent.getStringExtra(MainActivity.p1userN)!= null) {
+            Log.d("names", ""+intent.getStringExtra(MainActivity.p1userN));
+            p1Name = intent.getStringExtra(MainActivity.p1userN);
+            p2Name = intent.getStringExtra(MainActivity.p2userN);
+        }else {
+            Log.d("names", ""+intent.getStringExtra(BattleEndScreen.p2userN));
+            p1Name = intent.getStringExtra(BattleEndScreen.p1userN);
+            p2Name = intent.getStringExtra(BattleEndScreen.p2userN);
+        }
         startupAnimations();
-
         hoBarView=findViewById(R.id.hbrownbar);
         waBarView=findViewById(R.id.waloppurpBard);
-        if(skinP1< 0.5) {
+        skinP1 = MainActivity.getP1Skin();
+        skinP2 = MainActivity.getP2Skin();
+        Log.d("SKIN", ""+skinP1);
+        Log.d("SKIN", ""+skinP2);
+        if(skinP1==0) {
             hoopoeIdleView = findViewById(R.id.hoopidl);
             hoopoeIdleView.setVisibility(View.VISIBLE);
             hoopoeAttackView = findViewById(R.id.hoopatk);
@@ -362,7 +341,7 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
             hoopoeIdleView.setVisibility(View.VISIBLE);
             hoopoeAttackView = findViewById(R.id.hrca);
         }
-        if(skinP2 < 0.5){
+        if(skinP2 ==0){
             waloopoeIdleView = findViewById(R.id.wlpidle);
             waloopoeIdleView.setVisibility(View.VISIBLE);
             waloopoeAttackView = findViewById(R.id.waloopatk);
@@ -371,13 +350,10 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
             waloopoeIdleView.setVisibility(View.VISIBLE);
             waloopoeAttackView = findViewById(R.id.wbca);
         }
-
-
         player1View=findViewById(R.id.player1);
         player1View.setText("Hoopoe - "+p1Name);
         player2View=findViewById(R.id.player2);
         player2View.setText("Waloopoe - "+p2Name);
-
         attackHeight = (int) (hoopoeIdleView.getY()-180);
         isPlaying = false;
         hMovable=true;
@@ -406,7 +382,6 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
                 timeleftMS = l;
                 updateTimer();
             }
-
             @Override
             public void onFinish() {
                 if(waHealth ==  hoHealth){
@@ -414,22 +389,16 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
                     intent.putExtra(Player, "neither player");
                     startActivity(intent);
                     stopTimer();
-                    stopBGM();
-                    finish();
                 }else if (waHealth>hoHealth){
                     Intent intent = new Intent(BattleScreen.this, BattleEndScreen.class);
-                    intent.putExtra(Player, "player2");
+                    intent.putExtra(Player, p1Name);
                     startActivity(intent);
                     stopTimer();
-                    stopBGM();
-                    finish();
                 }else if (waHealth<hoHealth){
                     Intent intent = new Intent(BattleScreen.this, BattleEndScreen.class);
-                    intent.putExtra(Player, "player1");
+                    intent.putExtra(Player, p2Name);
                     startActivity(intent);
                     stopTimer();
-                    stopBGM();
-                    finish();
                 }
             }
         }.start();
@@ -442,7 +411,6 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
 
     public void updateTimer(){
         int seconds = (int) timeleftMS/1000;
-
         String timeLeftText;
         timeLeftText = ""+seconds;
         countdownText.setText(timeLeftText);
@@ -481,25 +449,18 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
         tussleSet.addAnimation(tusslein);
         tussleout.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
+            public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
                 TussleView.setVisibility(View.GONE);
                 startStop();
             }
-
             @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
+            public void onAnimationRepeat(Animation animation) {}
         });
         tussleSet.addAnimation(tussleout);
         TussleView.setAnimation(tussleSet);
     }
-
 
 }
 

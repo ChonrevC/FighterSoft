@@ -81,12 +81,14 @@ public class Settings extends AppCompatActivity {
                     hpidl.setVisibility(View.INVISIBLE);
                     rdidl=findViewById(R.id.rdidle);
                     rdidl.setVisibility(View.VISIBLE);
+                    MainActivity.setP1Skin(hoops);
                 }else{
                     hoops=0;
                     hpidl=findViewById(R.id.hoopidl);
                     hpidl.setVisibility(View.VISIBLE);
                     rdidl=findViewById(R.id.rdidle);
                     rdidl.setVisibility(View.INVISIBLE);
+                    MainActivity.setP1Skin(hoops);
                 }
 
             }
@@ -103,12 +105,14 @@ public class Settings extends AppCompatActivity {
                     wpidl.setVisibility(View.INVISIBLE);
                     blidl=findViewById(R.id.wblidl);
                     blidl.setVisibility(View.VISIBLE);
+                    MainActivity.setP2Skin(woops);
                 }else{
                     woops=0;
                     wpidl=findViewById(R.id.wlpidle);
                     wpidl.setVisibility(View.VISIBLE);
                     blidl=findViewById(R.id.wblidl);
                     blidl.setVisibility(View.INVISIBLE);
+                    MainActivity.setP2Skin(woops);
                 }
 
             }

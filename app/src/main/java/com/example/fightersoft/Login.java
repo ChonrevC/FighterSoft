@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class Login extends AppCompatActivity {
     Button buttonLogin;
     TextView textViewSignUp;
     ProgressBar progressBar;
+    private String get;
 
     // create a variable to allow for DB usage
     private FirebaseAuth mAuth;
@@ -39,6 +41,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Intent intent = getIntent();
+        get = intent.getStringExtra(MainActivity.send);
+        Log.d("user", get);
 
         this.editTextEmail = findViewById(R.id.email);
         this.editTextPassword = findViewById(R.id.password);
@@ -90,35 +95,24 @@ public class Login extends AppCompatActivity {
         }
 
         // if the password space is less than 6 characters (firebase doesn't accept passwords under 6 characters)
-        if(password.isEmpty())
+        else if(password.isEmpty())
         {
             editTextPassword.setError("Password is required");
             editTextPassword.requestFocus();
             return;
         }
 
-        // if all fields were inputted in properly, put in the info into the database
-        progressBar.setVisibility(View.VISIBLE);                        // show loading
-
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if(task.isSuccessful())
-                {
-                    progressBar.setVisibility(View.GONE);
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }
-                else
-                {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Incorrect email or password", Toast.LENGTH_LONG).show();
-                }
-
+        else{
+            if(get.equals("one")){
+                MainActivity.setPlayer1(email, password);
+                MainActivity.resetP1G();
+                finish();
+            } else if(get.equals("two")){
+                MainActivity.setPlayer2(email, password);
+                MainActivity.resetP2G();
+                finish();
             }
-        });
+        }
 
     }
 
