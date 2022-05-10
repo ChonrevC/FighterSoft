@@ -50,14 +50,14 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         // function that plays when deleteButton is clicked
-        /*
+        deleteButton=findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteUser();
             }
         });
-
+        /*
         updateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -141,29 +141,34 @@ public class Settings extends AppCompatActivity {
         if(email.isEmpty())
         {
             editTextEmail.setError("Enter email to delete account");
-            editTextEmail.requestFocus();
+            //editTextEmail.requestFocus();
             return;
         }
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(email != user.getEmail())
+        /*else if(email != user.getEmail())
         {
             editTextEmail.setError("Incorrect email");
-            editTextEmail.requestFocus();
+            //editTextEmail.requestFocus();
             return;
-        }
+        }*/
 
-        if(password.isEmpty())
+        else if(password.isEmpty())
         {
             editTextPassword.setError("Enter correct password");
-            editTextPassword.requestFocus();
+           // editTextPassword.requestFocus();
             return;
         }
 
         else
         {
-            AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+            if(email.equals(MainActivity.getPlayer1UN()) && password.equals(MainActivity.getPlayer1PW())){
+                MainActivity.setPlayer1("", "");
+            }else if(email.equals(MainActivity.getPlayer2UN()) && password.equals(MainActivity.getPlayer2PW())){
+                MainActivity.setPlayer2("", "");
+            }
+            /*AuthCredential credential = EmailAuthProvider.getCredential(email, password);
 
             if(user != null)
             {
@@ -190,7 +195,7 @@ public class Settings extends AppCompatActivity {
 
                     }
                 });
-            }
+            }*/
         }
 
     }
@@ -208,6 +213,7 @@ public class Settings extends AppCompatActivity {
             editTextEmail.requestFocus();
             return;
         }
+        /*
 
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -223,7 +229,7 @@ public class Settings extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
     }
 

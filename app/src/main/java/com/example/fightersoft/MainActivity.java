@@ -44,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
     public static int getP2Skin(){return p2Skin;}
     public static void setPlayer1(String p1u, String p1p){p1userN=p1u;p1password=p1p;p1wins=0;p1Games=0;}
     public static void setPlayer2(String p2u, String p2p){p2userN=p2u;p2password=p2p;p2wins=0;p2Games=0;}
-
+    public static String getPlayer1UN(){return p1userN;}
+    public static String getPlayer2UN(){return p2userN;}
+    public static String getPlayer1PW(){return p1password;}
+    public static String getPlayer2PW(){return p2password;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

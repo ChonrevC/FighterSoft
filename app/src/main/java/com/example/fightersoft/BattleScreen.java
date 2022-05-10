@@ -391,12 +391,12 @@ public class BattleScreen extends AppCompatActivity implements KeyEvent.Callback
                     stopTimer();
                 }else if (waHealth>hoHealth){
                     Intent intent = new Intent(BattleScreen.this, BattleEndScreen.class);
-                    intent.putExtra(Player, p1Name);
+                    intent.putExtra(Player, "player2");
                     startActivity(intent);
                     stopTimer();
                 }else if (waHealth<hoHealth){
                     Intent intent = new Intent(BattleScreen.this, BattleEndScreen.class);
-                    intent.putExtra(Player, p2Name);
+                    intent.putExtra(Player, "player1");
                     startActivity(intent);
                     stopTimer();
                 }

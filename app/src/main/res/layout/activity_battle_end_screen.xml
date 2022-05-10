@@ -90,12 +90,12 @@
         tools:text="+1 to Winner's Record" />
 
     <Button
+        android:id="@+id/MM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/MM"
-        android:background="@color/white"
+        android:backgroundTint="@color/darkBlue"
         android:text="Main Menu?"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:translationX="25dp"
         android:translationY="540dp" />
 
@@ -104,8 +104,8 @@
         android:layout_height="wrap_content"
         android:text="Play Again"
         android:id="@+id/PA"
-        android:textColor="@color/black"
-        android:background="@color/white"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/darkBlue"
         android:translationX="265dp"
         android:translationY="540dp" />
 
